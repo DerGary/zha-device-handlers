@@ -5,10 +5,11 @@ from zigpy.zcl.clusters.hvac import RunningState, Thermostat
 from zhaquirks.tuya import (
     PowerConfiguration,
     TuyaLocalCluster,
-    TuyaPowerConfigurationCluster3AA
+    TuyaPowerConfigurationCluster3AA,
 )
 from zhaquirks.tuya.mcu import TuyaAttributesCluster
 import zigpy.types as t
+
 
 class PresetMode(t.enum8):
     """PresetMode Enum."""
@@ -20,6 +21,7 @@ class PresetMode(t.enum8):
     FrostProtection = 0x04
     Holiday = 0x05
     Off = 0x06
+
 
 class TuyaThermostat(Thermostat, TuyaAttributesCluster):
     """Tuya local thermostat cluster."""
@@ -39,7 +41,9 @@ class TuyaThermostat(Thermostat, TuyaAttributesCluster):
         )
         self.add_unsupported_attribute(Thermostat.AttributeDefs.pi_heating_demand.id)
 
+
 from zhaquirks.tuya.builder import TuyaQuirkBuilder
+
 (
     TuyaQuirkBuilder("_TZE204_vjpaih9f", "TS0601")
     .tuya_enum(
@@ -82,9 +86,9 @@ from zhaquirks.tuya.builder import TuyaQuirkBuilder
         fallback_name="Window Detection",
     )
     .tuya_binary_sensor(
-        dp_id=15, 
-        attribute_name="window_open", 
-        translation_key="window_open", 
+        dp_id=15,
+        attribute_name="window_open",
+        translation_key="window_open",
         fallback_name="Window Open",
         entity_type=EntityType.STANDARD,
         device_class=BinarySensorDeviceClass.WINDOW,
@@ -102,9 +106,9 @@ from zhaquirks.tuya.builder import TuyaQuirkBuilder
         fallback_name="Holiday Temperature",
     )
     .tuya_binary_sensor(
-        dp_id=35, 
-        attribute_name="battery_low", 
-        translation_key="battery_low", 
+        dp_id=35,
+        attribute_name="battery_low",
+        translation_key="battery_low",
         fallback_name="Battery Low",
         entity_type=EntityType.DIAGNOSTIC,
         device_class=BinarySensorDeviceClass.BATTERY,
